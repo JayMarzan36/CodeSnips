@@ -2,14 +2,15 @@ import os
 
 def searchFolder(user_input):
     searched_files = []
-    for root, dirs, files in os.walk('src/data'):
+    
+    for root, dirs, files in os.walk('data'):
         for file in files:
             if user_input in file.split()[0]:
                 searched_files.append(file)
     return searched_files
 
 def printContents(selectedFile):
-    for root, dirs, files in os.walk('src/data'):
+    for root, dirs, files in os.walk('data'):
         for file in files:
             if selectedFile == file:
                 filepath = root + '/' + file
@@ -19,7 +20,6 @@ def printContents(selectedFile):
 
 if __name__ == "__main__":
     user_input = input("Please input keyword: ")
-    # Test the functions
     files = searchFolder(user_input)
 
     print('---Selected files---')
