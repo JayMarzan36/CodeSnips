@@ -9,14 +9,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-public class test {
+public class Utils {
     public static void main(String[] args) throws IOException {
         System.out.print("Input a directory: ");
 
         String inputDirectory;
         String userContinue;
         String inputFile;
-        String readFilePath;
         Scanner readInput = new Scanner(System.in);
             
 
@@ -80,7 +79,7 @@ public class test {
         }
     }
 
-    private static void getFilesInDirectory(File directory, Map<String, String> filesFound) throws IOException {
+    public static void getFilesInDirectory(File directory, Map<String, String> filesFound) throws IOException {
         if (!directory.exists()) return; // If the given path doesn't exist, do nothing
         
         File[] list = directory.listFiles();
@@ -91,6 +90,33 @@ public class test {
                 String path = list1.getCanonicalPath(); // Get the full canonical path of each file found
                 filesFound.put(list1.getName(), path); // Add the filename as key and its full path as value in our map
             }
+        }
+    }
+
+    public static boolean isValidPath(String path) {
+        try {
+            new File(path);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public static String whatIsPath(String path) {
+        // if return true, path is folder. Else path is file
+        String pathType;
+        if (isValidPath(path)) {
+            File file = new File(path);
+            if (file.isDirectory()) {
+                pathType = "Path is folder";
+                return pathType;
+            } else {
+                pathType = "Path is file";
+                return pathType;
+            }
+        } else {
+            pathType = "None";
+            return pathType;
         }
     }
 }
