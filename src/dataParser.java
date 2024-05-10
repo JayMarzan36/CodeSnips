@@ -4,7 +4,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.lang.classfile.Superclass;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -31,6 +30,8 @@ public class dataParser extends Utils{
         String pathType;
         String keyWordPath = null;
 
+        int lineFactor = 10;
+
         HashMap<String, String> contents = new HashMap<>();
         ArrayList<String> keyWords = new ArrayList<>();
 
@@ -44,6 +45,8 @@ public class dataParser extends Utils{
 
         if (fileType.equals("Python")) keyWordPath = "CodeSnips/src/data/keyWords/pythonKeyWords.txt";
 
+
+        // load key words into a dictionary
 
         Utils.readFile(keyWordPath);
 
@@ -85,7 +88,18 @@ public class dataParser extends Utils{
         }
         try {
             while ((line = br.readLine()) != null) {
-                System.out.println(line);
+                // Stuff here
+
+
+
+
+
+
+
+
+
+
+                // System.out.println(line);
             }
         } catch (IOException e) {
             System.out.println(e);
