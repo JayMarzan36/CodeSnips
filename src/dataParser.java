@@ -5,11 +5,14 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 
 public class dataParser extends Utils{
+    @SuppressWarnings("unchecked")
     public static void main(String[] args) {
         // Input a file or folder or directory
         // Read line by line and keep track
@@ -30,10 +33,11 @@ public class dataParser extends Utils{
         String pathType;
         String keyWordPath = null;
 
-        int lineFactor = 10;
+        int lineFactor = 2;
 
-        HashMap<String, String> contents = new HashMap<>();
         ArrayList<String> keyWords = new ArrayList<>();
+        ArrayList<String> current_contents = new ArrayList<>();
+        Map<String, String[]> returnedDict = new HashMap<>();
 
         try (Scanner readInput = new Scanner(System.in)) {
             System.out.print("Please input type of file (Python, Java, C, ...): ");
@@ -47,7 +51,7 @@ public class dataParser extends Utils{
 
 
         // load key words into a dictionary
-
+        keyWords = parseFile(keyWordPath);
         Utils.readFile(keyWordPath);
 
 
@@ -58,27 +62,30 @@ public class dataParser extends Utils{
         pathType = Utils.whatIsPath(inputFileoFolder);
 
         if (pathType.equals("Path is file")) {
-            System.out.println("Input is file path");
+            System.out.println("\nInput is file path\n");
+            current_contents = parseFile(inputFileoFolder);
+            returnedDict = keywordsInCurrentLine(keyWords, current_contents, lineFactor);
+
+
+            
+            for (String key: returnedDict.keySet()) {
+                System.out.println(key + " : " + Arrays.toString(returnedDict.get(key)));
+            }
+
+
+
+
         }
 
         if (pathType.equals("Path is folder")) {
             System.out.println("Input is folder path");
         }
-
-
-
-
-
-
-
     }
 
-
-
-
     @SuppressWarnings("rawtypes")
-    public static void parseFile(String filePath, HashMap dictionary, ArrayList keywords) {
+    public static ArrayList parseFile(String filePath) {
         String line;
+        ArrayList<String> contents = new ArrayList<>();
         BufferedReader br =null;
         try {
             FileInputStream fis = new FileInputStream(filePath);
@@ -89,16 +96,7 @@ public class dataParser extends Utils{
         try {
             while ((line = br.readLine()) != null) {
                 // Stuff here
-
-
-
-
-
-
-
-
-
-
+                contents.add(line);
                 // System.out.println(line);
             }
         } catch (IOException e) {
@@ -110,5 +108,41 @@ public class dataParser extends Utils{
                 System.out.println(e);
             }
         }
+        return contents;
     }
+
+    public static Map keywordsInCurrentLine(ArrayList keyWords, ArrayList contents, int lineFactor) {
+        String current;
+        String currentKey;
+        String lines;
+        String[] oldValue;
+        String newValue;
+        Map<String, String[]> dict = new HashMap<>();
+
+        for (int i =0; i < contents.size(); i++) { // Iterate through contents/lines of current file
+            System.out.println(contents.get(i).toString());
+            for (int j =0; j < keyWords.size(); j++) { // Iterate through key words
+                
+                current = contents.get(i).toString();
+                
+                currentKey = keyWords.get(j).toString();
+
+                if (current.contains(currentKey)) {
+                    if (dict.containsKey(currentKey)) {
+                        lines = "," + (i + 1) + "-" + (i + 1 + lineFactor);
+                        oldValue = dict.get(currentKey);
+                        newValue = Arrays.toString(oldValue).replace("[", "").replace("]", "") + lines;
+                        dict.put(currentKey, new String[]{newValue});
+                    } else {
+                        lines = (i + 1) + "-" + (i + 1 + lineFactor);
+                        dict.put(currentKey, new String[]{lines});
+                    }
+                }
+            }
+        }
+        return dict;
+    }
+
+
+
 }

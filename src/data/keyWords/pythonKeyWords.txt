@@ -1,3 +1,14 @@
-nForLoop
-function
+for
+def
 print
+import
+input
+float
+int
+string
+class
+while
+try
+except
+finally
+if
