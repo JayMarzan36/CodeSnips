@@ -52,17 +52,12 @@ public class dataParser extends Utils{
 
         // load key words into a dictionary
         keyWords = parseFile(keyWordPath);
-        Utils.readFile(keyWordPath);
-
-
-
-
-
-
+        
         pathType = Utils.whatIsPath(inputFileoFolder);
 
         if (pathType.equals("Path is file")) {
             System.out.println("\nInput is file path\n");
+            long start = System.currentTimeMillis();
             current_contents = parseFile(inputFileoFolder);
             returnedDict = keywordsInCurrentLine(keyWords, current_contents, lineFactor);
 
@@ -74,12 +69,15 @@ public class dataParser extends Utils{
 
 
 
-
+            long end = System.currentTimeMillis();
+            System.out.printf("Elapsed time: %d milliseconds", (end - start));
         }
 
         if (pathType.equals("Path is folder")) {
             System.out.println("Input is folder path");
         }
+
+        saveData(returnedDict, inputFileoFolder);
     }
 
     @SuppressWarnings("rawtypes")
@@ -95,9 +93,7 @@ public class dataParser extends Utils{
         }
         try {
             while ((line = br.readLine()) != null) {
-                // Stuff here
                 contents.add(line);
-                // System.out.println(line);
             }
         } catch (IOException e) {
             System.out.println(e);
@@ -112,30 +108,27 @@ public class dataParser extends Utils{
     }
 
     public static Map keywordsInCurrentLine(ArrayList keyWords, ArrayList contents, int lineFactor) {
-        String current;
         String currentKey;
         String lines;
         String[] oldValue;
         String newValue;
         Map<String, String[]> dict = new HashMap<>();
-
         for (int i =0; i < contents.size(); i++) { // Iterate through contents/lines of current file
             System.out.println(contents.get(i).toString());
+            String[] splitContents = contents.get(i).toString().split(" ");
             for (int j =0; j < keyWords.size(); j++) { // Iterate through key words
-                
-                current = contents.get(i).toString();
-                
                 currentKey = keyWords.get(j).toString();
-
-                if (current.contains(currentKey)) {
-                    if (dict.containsKey(currentKey)) {
-                        lines = "," + (i + 1) + "-" + (i + 1 + lineFactor);
-                        oldValue = dict.get(currentKey);
-                        newValue = Arrays.toString(oldValue).replace("[", "").replace("]", "") + lines;
-                        dict.put(currentKey, new String[]{newValue});
-                    } else {
-                        lines = (i + 1) + "-" + (i + 1 + lineFactor);
-                        dict.put(currentKey, new String[]{lines});
+                for (String word: splitContents) {
+                    if (word.contains(currentKey)){
+                        if (dict.containsKey(currentKey)) {
+                            lines = "," + (i + 1) + "-" + (i + 1 + lineFactor);
+                            oldValue = dict.get(currentKey);
+                            newValue = Arrays.toString(oldValue).replace("[", "").replace("]", "") + lines;
+                            dict.put(currentKey, new String[]{newValue});
+                        } else {
+                            lines = (i + 1) + "-" + (i + 1 + lineFactor);
+                            dict.put(currentKey, new String[]{lines});
+                        }
                     }
                 }
             }
@@ -143,6 +136,15 @@ public class dataParser extends Utils{
         return dict;
     }
 
+    public static void saveData(Map returnedDict, String filePath) {
+        String fileName;
+        String[] splitPath = null;
+        if (filePath.contains("/")) splitPath = filePath.split("/");
+        else splitPath = filePath.split("\\\\");
+        fileName = splitPath[splitPath.length - 1];
+        System.out.println(fileName);
 
+        
+    }
 
 }

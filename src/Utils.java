@@ -3,55 +3,19 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.Scanner;
 
+/**
+ *
+ * @author jaymb
+ */
 public class Utils {
     public static void main(String[] args) throws IOException {
-        System.out.print("Input a directory: ");
-
-        String inputDirectory;
-        String userContinue;
-        String inputFile;
-        Scanner readInput = new Scanner(System.in);
-            
-
-        inputDirectory = readInput.next();
-        System.out.println("User Inputed: " + inputDirectory);
-
-        System.out.print("Confirm (y,n): ");
-        userContinue = readInput.next();
-        if ("n".equals(userContinue)) {
-            System.out.print("Corrected directory: ");
-            inputDirectory = readInput.next();
-        }
-
-        HashMap<String, String> fileMap = new HashMap<>();
-        getFilesInDirectory(new File(inputDirectory), fileMap);
-
-        int count = 0;
-        for (Map.Entry<String, String> entry : fileMap.entrySet()) {
-            System.out.println(count + " : Filename: " + entry.getKey() + ", Path: " + entry.getValue());
-            count ++;
-        }
-
-        System.out.print("File to read: ");
-        inputFile = readInput.next();
-
-        
-        
-
-
-
-        if (fileMap.containsKey(inputFile)) {
-            String realPath = fileMap.get(inputFile);
-            readFile(realPath);
-        } else {
-            System.out.println("File not exist in dictionary");
-        }
+        String test = "Testing my write function";
+        writeToFile("Testing my write function");
 
 
     }
@@ -117,6 +81,14 @@ public class Utils {
         } else {
             pathType = "None";
             return pathType;
+        }
+    }
+    
+    public static void writeToFile(String toWrite) {
+        try (FileWriter writer = new FileWriter("DataBase.txt", true)){
+            String finalWrite = (toWrite + System.lineSeparator());
+            writer.write(finalWrite);
+        } catch (IOException e) {
         }
     }
 }
