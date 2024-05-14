@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -136,15 +137,35 @@ public class dataParser extends Utils{
         return dict;
     }
 
-    public static void saveData(Map returnedDict, String filePath) {
+    public static void saveData(Map<String, String[]> returnedDict, String filePath) {
         String fileName;
         String[] splitPath = null;
+
+        List<String> contentToSave = new ArrayList<>();
+
         if (filePath.contains("/")) splitPath = filePath.split("/");
         else splitPath = filePath.split("\\\\");
-        fileName = splitPath[splitPath.length - 1];
-        System.out.println(fileName);
 
         
+
+
+        fileName = splitPath[splitPath.length - 1];
+        System.out.println("\n--Data to save---\n");
+        System.out.println(fileName);
+        System.out.println(returnedDict);
+
+
+
+        // Save filename, path, and data of parsed file
+
+        contentToSave.add(fileName);
+        contentToSave.add(filePath);
+        for (String key: returnedDict.keySet()) {
+            contentToSave.add(key + Arrays.toString(returnedDict.get(key)));
+        }
+        
+        Utils.writeToFile(contentToSave);
+
     }
 
 }

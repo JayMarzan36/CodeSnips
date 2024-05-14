@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -84,10 +85,15 @@ public class Utils {
         }
     }
     
-    public static void writeToFile(String toWrite) {
+    public static void writeToFile(List<String> toWrite) {
         try (FileWriter writer = new FileWriter("DataBase.txt", true)){
             String finalWrite = (toWrite + System.lineSeparator());
-            writer.write(finalWrite);
+            for (String towrite: toWrite) {
+                writer.write(towrite + '|');
+            }
+            writer.write(System.lineSeparator());
+
+            // writer.write(finalWrite);
         } catch (IOException e) {
         }
     }
