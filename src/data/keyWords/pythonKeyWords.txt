@@ -28,5 +28,6 @@ or
 pass
 raise
 return
-trywhile
+try
+while
 with

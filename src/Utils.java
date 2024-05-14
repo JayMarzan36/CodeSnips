@@ -16,7 +16,7 @@ import java.util.Map;
 public class Utils {
     public static void main(String[] args) throws IOException {
         String test = "Testing my write function";
-        writeToFile("Testing my write function");
+        // writeToFile("Testing my write function");
 
 
     }
@@ -44,8 +44,8 @@ public class Utils {
         }
     }
 
-    public static void getFilesInDirectory(File directory, Map<String, String> filesFound) throws IOException {
-        if (!directory.exists()) return; // If the given path doesn't exist, do nothing
+    public static File[] getFilesInDirectory(File directory, Map<String, String> filesFound) throws IOException {
+        if (!directory.exists()) return null; // If the given path doesn't exist, do nothing
         
         File[] list = directory.listFiles();
         for (File list1 : list) {
@@ -56,6 +56,7 @@ public class Utils {
                 filesFound.put(list1.getName(), path); // Add the filename as key and its full path as value in our map
             }
         }
+        return list;
     }
 
     public static boolean isValidPath(String path) {
@@ -84,9 +85,8 @@ public class Utils {
             return pathType;
         }
     }
-    
     public static void writeToFile(List<String> toWrite) {
-        try (FileWriter writer = new FileWriter("DataBase.txt", true)){
+        try (FileWriter writer = new FileWriter("CodeSnips/src/data/DataBase.txt", true)){
             String finalWrite = (toWrite + System.lineSeparator());
             for (String towrite: toWrite) {
                 writer.write(towrite + '|');
