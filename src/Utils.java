@@ -92,8 +92,6 @@ public class Utils {
                 writer.write(towrite + '|');
             }
             writer.write(System.lineSeparator());
-
-            // writer.write(finalWrite);
         } catch (IOException e) {
         }
     }

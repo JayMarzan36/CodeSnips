@@ -63,8 +63,7 @@ public class dataParser{
                 String strfile = file.toString();
                 current_contents = parseFile(strfile);
                 returnedDict = keywordsInCurrentLine(keyWords, current_contents, lineFactor);
-                // System.out.println(file);
-                saveData(returnedDict, inputFileoFolder);
+                saveData(returnedDict, strfile);
             }
             long end = System.currentTimeMillis();
             System.out.printf("Elapsed time: %d milliseconds", (end - start));
@@ -103,7 +102,6 @@ public class dataParser{
         String newValue;
         Map<String, String[]> dict = new HashMap<>();
         for (int i =0; i < contents.size(); i++) { // Iterate through contents/lines of current file
-            // System.out.println(contents.get(i).toString());
             String[] splitContents = contents.get(i).toString().split(" ");
             for (int j =0; j < keyWords.size(); j++) { // Iterate through key words
                 currentKey = keyWords.get(j).toString();
@@ -131,10 +129,6 @@ public class dataParser{
         if (filePath.contains("/")) splitPath = filePath.split("/");
         else splitPath = filePath.split("\\\\");
         fileName = splitPath[splitPath.length - 1];
-        // System.out.println("\n--Data to save---\n");
-        // System.out.println(fileName);
-        // System.out.println(returnedDict);
-        // Save filename, path, and data of parsed file
         contentToSave.add(fileName);
         contentToSave.add(filePath);
         for (String key: returnedDict.keySet()) {
