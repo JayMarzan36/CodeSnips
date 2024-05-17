@@ -6,8 +6,9 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+import java.util.Stack;
 
 /**
  *
@@ -44,20 +45,44 @@ public class Utils {
         }
     }
 
-    public static File[] getFilesInDirectory(File directory, Map<String, String> filesFound) throws IOException {
-        if (!directory.exists()) return null; // If the given path doesn't exist, do nothing
-        
-        File[] list = directory.listFiles();
-        for (File list1 : list) {
-            if (list1.isDirectory()) {
-                getFilesInDirectory(list1, filesFound); // Recursively call this method to go into subdirectories
-            } else {
-                String path = list1.getCanonicalPath(); // Get the full canonical path of each file found
-                filesFound.put(list1.getName(), path); // Add the filename as key and its full path as value in our map
+public static List<String> findFiles(String folderPath, String[] includeExtensions) {
+        List<String> filePaths = new ArrayList<>();
+        Stack<File> stack = new Stack<>();
+        File root = new File(folderPath);
+
+        if (!root.isDirectory()) {
+            System.err.println("Error: The specified path is not a directory.");
+            return filePaths;
+        }
+
+        stack.push(root);
+
+        while (!stack.isEmpty()) {
+            File current = stack.pop();
+            File[] files = current.listFiles();
+            if (files != null) {
+                for (File file : files) {
+                    if (file.isFile() && isIncluded(file, includeExtensions)) {
+                        filePaths.add(file.getAbsolutePath());
+                    } else if (file.isDirectory()) {
+                        stack.push(file);
+                    }
+                }
             }
         }
-        return list;
+
+        return filePaths;
     }
+
+private static boolean isIncluded(File file, String[] includedExtensions) {
+    String fileName = file.getName();
+    for (String extensions: includedExtensions) {
+        if (fileName.toLowerCase().endsWith(extensions.toLowerCase())) {
+            return true;
+        }
+    }
+    return false;
+}
 
     public static boolean isValidPath(String path) {
         try {
@@ -85,6 +110,7 @@ public class Utils {
             return pathType;
         }
     }
+
     public static void writeToFile(List<String> toWrite) {
         try (FileWriter writer = new FileWriter("CodeSnips/src/data/DataBase.txt", true)){
             String finalWrite = (toWrite + System.lineSeparator());

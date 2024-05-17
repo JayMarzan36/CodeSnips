@@ -1,5 +1,4 @@
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -40,9 +39,9 @@ public class dataParser{
             System.out.print("Please input a file path or folder path: ");
             inputFileoFolder = readInput.next();
         }
-        if (fileType.equals("Python")) keyWordPath = "CodeSnips/src/data/keyWords/pythonKeyWords.txt";
+        if (fileType.equals("Python")) keyWordPath = "/data/keyWords/pythonKeyWords.txt";
         // load key words into a dictionary
-        keyWords = parseFile(keyWordPath);
+        keyWords = parseKeyWords(keyWordPath);
         pathType = Utils.whatIsPath(inputFileoFolder);
         if (pathType.equals("Path is file")) {
             // System.out.println("\nInput is file path\n");
@@ -56,41 +55,41 @@ public class dataParser{
         if (pathType.equals("Path is folder")) {
             System.out.println("Input is folder path");
             long start = System.currentTimeMillis();
-            File directory = new File(inputFileoFolder);
-            Map<String, String> filesFound = new HashMap<>();
-            File[] files = Utils.getFilesInDirectory(directory, filesFound);
-            for (File file: files) {
-                String strfile = file.toString();
-                current_contents = parseFile(strfile);
+
+            String[] includeExtensions = {".java", ".py", ".cpp"};
+            List<String> filesFound = Utils.findFiles(inputFileoFolder, includeExtensions);
+            
+
+            for (String filepath: filesFound) {
+                current_contents = parseFile(filepath);
                 returnedDict = keywordsInCurrentLine(keyWords, current_contents, lineFactor);
-                saveData(returnedDict, strfile);
+                saveData(returnedDict, filepath);
             }
+
             long end = System.currentTimeMillis();
             System.out.printf("Elapsed time: %d milliseconds", (end - start));
         }
     }
-    @SuppressWarnings("rawtypes")
-    public static ArrayList parseFile(String filePath) {
-        String line;
+    public static ArrayList<String> parseFile(String filePath) throws IOException {
         ArrayList<String> contents = new ArrayList<>();
-        BufferedReader br =null;
-        try {
-            FileInputStream fis = new FileInputStream(filePath);
-            br = new BufferedReader(new InputStreamReader(fis));
-        } catch (FileNotFoundException e) {
-            System.out.printf("Exception %s", e);
-        }
-        try {
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(filePath)))) {
+            String line;
             while ((line = br.readLine()) != null) {
                 contents.add(line);
             }
-        } catch (IOException e) {
-            System.out.println(e);
-        } finally {
-            try {
-                br.close();
-            } catch (IOException e) {
-                System.out.println(e);
+        } catch (FileNotFoundException e) {
+            System.err.println("File not found: " + filePath);
+            throw e;
+        }
+        return contents;
+    }
+
+    public static ArrayList<String> parseKeyWords(String filePath) throws IOException {
+        ArrayList<String> contents = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(dataParser.class.getResourceAsStream(filePath)))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                contents.add(line);
             }
         }
         return contents;
