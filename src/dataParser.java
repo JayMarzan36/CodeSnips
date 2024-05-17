@@ -10,69 +10,61 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 public class dataParser{
-    @SuppressWarnings("unchecked")
     public static void main(String[] args) throws IOException {
-        // Input a file or folder or directory
-        // Read line by line and keep track
-            // Compare current line (string) to see if the keys in a dictionary are in the line
-            // If key in line
-                // Track current line + factor of line (10)
-                // Add the line 'positions' to the dictionary under the key
-            // Else do nothing
-            // Keep on comparing with lines
-        // When done add the keys and values to the main 'database' that has the same keys, but the value has
-            // The file
-            // File path
-            // And line 'positions'
-        // Done
-        String fileType; // Python, C, Java
-        String inputFileoFolder;
+        String fileType;
+        String inputPath;
         String pathType;
         String keyWordPath = null;
         int lineFactor = 2;
-        ArrayList<String> keyWords = new ArrayList<>();
-        ArrayList<String> current_contents = new ArrayList<>();
-        Map<String, String[]> returnedDict = new HashMap<>();
+        ArrayList<String> keyWords;
+        ArrayList<String> current_contents = null;
+        Map<String, String[]> returnedDict = null;
         try (Scanner readInput = new Scanner(System.in)) {
             System.out.print("Please input type of language (Python, Java, C, ...): ");
             fileType = readInput.next();
             System.out.print("Please input a file path or folder path: ");
-            inputFileoFolder = readInput.next();
+            inputPath = readInput.next();
         }
         if (fileType.equals("Python")) keyWordPath = "/data/keyWords/pythonKeyWords.txt";
-        // load key words into a dictionary
-        keyWords = parseKeyWords(keyWordPath);
-        pathType = Utils.whatIsPath(inputFileoFolder);
+        keyWords = parseFile(keyWordPath);
+        pathType = Utils.whatIsPath(inputPath);
         if (pathType.equals("Path is file")) {
-            // System.out.println("\nInput is file path\n");
-            long start = System.currentTimeMillis();
-            current_contents = parseFile(inputFileoFolder);
-            returnedDict = keywordsInCurrentLine(keyWords, current_contents, lineFactor);
-            long end = System.currentTimeMillis();
-            System.out.printf("Elapsed time: %d milliseconds", (end - start));
-            saveData(returnedDict, inputFileoFolder);
-        }
-        if (pathType.equals("Path is folder")) {
+            System.out.println("Input is file path");
+            doMainLogic(false, inputPath, lineFactor, keyWords, current_contents, returnedDict);
+        } else if (pathType.equals("Path is folder")) {
             System.out.println("Input is folder path");
-            long start = System.currentTimeMillis();
+            doMainLogic(true, inputPath, lineFactor, keyWords, current_contents, returnedDict);
+        }
+    }
 
+    public static void doMainLogic (boolean folder, String inputPath, int lineFactor, ArrayList<String> keyWords, ArrayList<String> current_contents, Map<String, String[]> returnedDict) throws IOException {
+        long start = System.currentTimeMillis();
+        if (!folder) {
+            current_contents = parseFile(inputPath);
+            returnedDict = keywordsInCurrentLine(keyWords, current_contents, lineFactor);
+            saveData(returnedDict, inputPath);
+        } else {
             String[] includeExtensions = {".java", ".py", ".cpp"};
-            List<String> filesFound = Utils.findFiles(inputFileoFolder, includeExtensions);
-            
-
+            List<String> filesFound = Utils.findFiles(inputPath, includeExtensions);
             for (String filepath: filesFound) {
                 current_contents = parseFile(filepath);
                 returnedDict = keywordsInCurrentLine(keyWords, current_contents, lineFactor);
                 saveData(returnedDict, filepath);
             }
-
-            long end = System.currentTimeMillis();
-            System.out.printf("Elapsed time: %d milliseconds", (end - start));
         }
+        long end = System.currentTimeMillis();
+        System.out.printf("Completed in:  %d milliseconds", (end - start));
     }
+
     public static ArrayList<String> parseFile(String filePath) throws IOException {
+        BufferedReader br;
+        if (filePath.contains(".txt")) {
+            br = new BufferedReader(new InputStreamReader(dataParser.class.getResourceAsStream(filePath)));
+        } else {
+            br = new BufferedReader(new InputStreamReader(new FileInputStream(filePath)));
+        }
         ArrayList<String> contents = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(filePath)))) {
+        try {
             String line;
             while ((line = br.readLine()) != null) {
                 contents.add(line);
@@ -84,26 +76,16 @@ public class dataParser{
         return contents;
     }
 
-    public static ArrayList<String> parseKeyWords(String filePath) throws IOException {
-        ArrayList<String> contents = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(dataParser.class.getResourceAsStream(filePath)))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                contents.add(line);
-            }
-        }
-        return contents;
-    }
-    public static Map keywordsInCurrentLine(ArrayList keyWords, ArrayList contents, int lineFactor) {
+    public static Map<String, String[]> keywordsInCurrentLine(ArrayList<String> keyWords, ArrayList<String> contents, int lineFactor) {
         String currentKey;
         String lines;
         String[] oldValue;
         String newValue;
         Map<String, String[]> dict = new HashMap<>();
         for (int i =0; i < contents.size(); i++) { // Iterate through contents/lines of current file
-            String[] splitContents = contents.get(i).toString().split(" ");
+            String[] splitContents = contents.get(i).split(" ");
             for (int j =0; j < keyWords.size(); j++) { // Iterate through key words
-                currentKey = keyWords.get(j).toString();
+                currentKey = keyWords.get(j);
                 for (String word: splitContents) {
                     if (word.contains(currentKey)){
                         if (dict.containsKey(currentKey)) {
@@ -121,9 +103,10 @@ public class dataParser{
         }
         return dict;
     }
+
     public static void saveData(Map<String, String[]> returnedDict, String filePath) {
         String fileName;
-        String[] splitPath = null;
+        String[] splitPath;
         List<String> contentToSave = new ArrayList<>();
         if (filePath.contains("/")) splitPath = filePath.split("/");
         else splitPath = filePath.split("\\\\");

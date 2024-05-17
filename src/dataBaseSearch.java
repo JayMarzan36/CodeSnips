@@ -13,26 +13,21 @@ public class dataBaseSearch {
         try (Scanner readInput = new Scanner(System.in)) {
             System.out.print("Please input keyword: ");
             inputedKeyWord = readInput.next();
+            long start = System.currentTimeMillis();
             Map<String, List<String>> dataBaseLines = readDataBase(inputedKeyWord);
             int count = 0;
             for (Map.Entry<String, List<String>> entry: dataBaseLines.entrySet()) {
                 String fileName = entry.getKey();
-                List<String> fileInfo = entry.getValue();
-                String filePath = fileInfo.get(0);
-                String data = fileInfo.get(1);
-                // System.out.printf("File name: %s | File path: %s | Data: %s\n", fileName, filePath, data);
                 System.out.printf("%d : File: %s\n", count, fileName);
                 count ++;
             }
-
+            long end = System.currentTimeMillis();
+            System.out.printf("Completed search in: %d milliseconds\n", (end - start));
             System.out.print("Select file by name: ");
-
             String selectedFileName = readInput.next();
             List<String> specificFileInfo = dataBaseLines.get(selectedFileName);
-
             String fileName = specificFileInfo.get(0);
             String fileData = specificFileInfo.get(1);
-
             System.out.printf("Selected file: %s \n Selected file data: %s", fileName, fileData);
         }
     }

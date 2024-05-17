@@ -16,14 +16,11 @@ import java.util.Stack;
  */
 public class Utils {
     public static void main(String[] args) throws IOException {
-        String test = "Testing my write function";
-        // writeToFile("Testing my write function");
-
 
     }
     public static void readFile(String filePath) {
         String line;
-        BufferedReader br =null;
+        BufferedReader br = null;
         try {
             FileInputStream fis = new FileInputStream(filePath);
             br = new BufferedReader(new InputStreamReader(fis));
@@ -49,14 +46,11 @@ public static List<String> findFiles(String folderPath, String[] includeExtensio
         List<String> filePaths = new ArrayList<>();
         Stack<File> stack = new Stack<>();
         File root = new File(folderPath);
-
         if (!root.isDirectory()) {
             System.err.println("Error: The specified path is not a directory.");
             return filePaths;
         }
-
         stack.push(root);
-
         while (!stack.isEmpty()) {
             File current = stack.pop();
             File[] files = current.listFiles();
@@ -70,7 +64,6 @@ public static List<String> findFiles(String folderPath, String[] includeExtensio
                 }
             }
         }
-
         return filePaths;
     }
 
@@ -94,7 +87,6 @@ private static boolean isIncluded(File file, String[] includedExtensions) {
     }
 
     public static String whatIsPath(String path) {
-        // if return true, path is folder. Else path is file
         String pathType;
         if (isValidPath(path)) {
             File file = new File(path);
@@ -113,7 +105,6 @@ private static boolean isIncluded(File file, String[] includedExtensions) {
 
     public static void writeToFile(List<String> toWrite) {
         try (FileWriter writer = new FileWriter("CodeSnips/src/data/DataBase.txt", true)){
-            String finalWrite = (toWrite + System.lineSeparator());
             for (String towrite: toWrite) {
                 writer.write(towrite + '|');
             }
