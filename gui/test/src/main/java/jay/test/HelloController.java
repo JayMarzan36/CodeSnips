@@ -19,15 +19,6 @@ public class HelloController {
     private TextField keywordInput;
 
     @FXML
-    private TableView<FileData> fileTableView;
-
-    @FXML
-    private TableColumn<FileData, Hyperlink> filePathColumn;
-
-    @FXML
-    private TableColumn<FileData, String> relatedDataColumn;
-
-    @FXML
     private void submitKeyWord(ActionEvent event) throws IOException {
         System.out.println(keywordInput.getText());
         switchScene(event, "hello-view2.fxml");

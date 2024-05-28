@@ -4,6 +4,7 @@ module jay.test {
 
     requires org.controlsfx.controls;
     requires org.kordamp.bootstrapfx.core;
+    requires javafx.graphics;
 
     opens jay.test to javafx.fxml;
     exports jay.test;
