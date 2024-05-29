@@ -10,18 +10,19 @@ import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import java.io.IOException;
-
+import java.util.List;
 
 
 public class HelloController {
-
     @FXML
     private TextField keywordInput;
 
     @FXML
     private void submitKeyWord(ActionEvent event) throws IOException {
         System.out.println(keywordInput.getText());
-        switchScene(event, "hello-view2.fxml");
+        List<Integer> dataBaseLines = dataBaseSearch.readDataBase(keywordInput.getText());
+        // System.out.println(dataBaseLines);
+        //switchScene(event, "hello-view2.fxml");
 
 
 

@@ -1,3 +1,5 @@
+package jay.test;
+
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -6,6 +8,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
 public class dataBaseSearch {
     public static void main(String[] args) {
         String inputedKeyWord;
@@ -16,7 +19,7 @@ public class dataBaseSearch {
         List<Integer> dataBaseLines = readDataBase(inputedKeyWord);
         System.out.println(dataBaseLines);
     }
-    private static List<Integer> readDataBase(String keyWord) {
+    public static List<Integer> readDataBase(String keyWord) {
         String line;
         String filePath = "D:/Coding/CodeSnips/src/data/DataBase.txt";
         int lineCount = 1;
