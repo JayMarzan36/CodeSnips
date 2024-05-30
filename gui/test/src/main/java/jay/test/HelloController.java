@@ -20,21 +20,11 @@ public class HelloController {
     @FXML
     private void submitKeyWord(ActionEvent event) throws IOException {
         String input = keywordInput.getText();
-
-
-
         if (!Utils.whatIsPath(input)) {
             System.out.println(input);
-            List<Integer> dataBaseLines = dataBaseSearch.readDataBase(keywordInput.getText());
+            List<String> dataBaseLines = dataBaseSearch.readDataBase(keywordInput.getText());
+            System.out.println(dataBaseLines);
         }
-
-
-        // System.out.println(dataBaseLines);
-        //switchScene(event, "hello-view2.fxml");
-
-
-
-
     }
 
     @FXML

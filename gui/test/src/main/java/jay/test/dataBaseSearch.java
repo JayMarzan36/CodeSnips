@@ -16,15 +16,14 @@ public class dataBaseSearch {
             System.out.print("Please input keyword: ");
             inputedKeyWord = readInput.next();
         }
-        List<Integer> dataBaseLines = readDataBase(inputedKeyWord);
+        List<String> dataBaseLines = readDataBase(inputedKeyWord);
         System.out.println(dataBaseLines);
     }
-    public static List<Integer> readDataBase(String keyWord) {
+    public static List<String> readDataBase(String keyWord) {
         String line;
         String filePath = "D:/Coding/CodeSnips/src/data/DataBase.txt";
         int lineCount = 1;
-        int displaycount = 0;
-        List<Integer> foundData = new ArrayList<>();
+        List<String> foundData = new ArrayList<>();
         BufferedReader br =null;
         try {
             FileInputStream fis = new FileInputStream(filePath);
@@ -39,9 +38,7 @@ public class dataBaseSearch {
                     String[] seperatedData = contents[i].split("\\W+");
                     for (String data: seperatedData) {
                         if (data.equals(keyWord)) {
-                            foundData.add(lineCount);
-                            System.out.println(displaycount + ": " + contents[0] + " : " + contents[i]);
-                            displaycount ++;
+                            foundData.add(contents[1]);
                         }
                     }
                 }
