@@ -1,5 +1,6 @@
 package gui;
 
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,60 +14,63 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 
 public class controller {
     @FXML
     private TextField keywordInput;
-    @FXML
-    private ListView< Hyperlink> listview = new ListView<>();
+
+
+
+    private static List<String> dataBaseLines;
 
     @FXML
     private void submitKeyWord(ActionEvent event) throws IOException {
         String input = keywordInput.getText();
         if (!Utils.whatIsPath(input)) {
             System.out.println(input);
-            List<String> dataBaseLines = dataBaseSearch.readDataBase(keywordInput.getText());
-            System.out.println(dataBaseLines);
+            List<String> retrievedData = dataBaseSearch.readDataBase(keywordInput.getText());
 
-            for (String path: dataBaseLines) {
-                Hyperlink filehyperlink = new Hyperlink();
-                filehyperlink.setOnAction(e -> {
-                    try {
-                        openFile(e, new File(path));
-                    } catch (IOException ex) {
-                        throw new RuntimeException(ex);
-                    }
-                });
-                listview.getItems().add(filehyperlink);
+            if (retrievedData != null && !retrievedData.isEmpty()) {
+                dataBaseLines = retrievedData;
+                System.out.println(dataBaseLines);
+                switchScene(event, "/showResults.fxml");
             }
         }
+
     }
 
-    @FXML
-    private void backToSearch(ActionEvent event) throws IOException {
-        switchScene(event, "hello-view.fxml");
+    public static List<String> getDataBaseLines() {
+        List<String> dataBaseLines1 = dataBaseLines;
+        return dataBaseLines1;
     }
 
-    @FXML
-    private void switchScene(ActionEvent event, String scenePath) throws IOException {
-        Parent newRoot = FXMLLoader.load(getClass().getResource(scenePath));
-        Scene newScene = new Scene(newRoot);
+
+
+
+
+
+
+
+    public static void switchScene(ActionEvent event, String scenePath) throws IOException {
+        FXMLLoader loader = new FXMLLoader(controller.class.getResource(scenePath));
+        Parent root = loader.load();
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(newScene);
+        stage.setScene(new Scene(root));
         stage.show();
     }
 
     @FXML
     private void openFile(ActionEvent event, File file) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("hello-view3.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("displayFile.fxml"));
         Parent newRoot = loader.load();
 
         webViewController webViewController = loader.getController();
         webViewController.loadFile(file.toURI().toString());
 
-        switchScene(event, "hello-view3.fxml");
+        switchScene(event, "displayFile.fxml");
     }
 
 
