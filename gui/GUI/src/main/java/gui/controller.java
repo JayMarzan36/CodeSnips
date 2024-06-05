@@ -1,31 +1,28 @@
 package gui;
 
-import javafx.collections.FXCollections;
+import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Hyperlink;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 
 public class controller {
     @FXML
     private TextField keywordInput;
-
-
-
+    @FXML
+    private Pane menuPane;
+    private boolean isMenuVisible = true;
     private static List<String> dataBaseLines;
-
     @FXML
     private void submitKeyWord(ActionEvent event) throws IOException {
         String input = keywordInput.getText();
@@ -41,19 +38,10 @@ public class controller {
         }
 
     }
-
     public static List<String> getDataBaseLines() {
         List<String> dataBaseLines1 = dataBaseLines;
         return dataBaseLines1;
     }
-
-
-
-
-
-
-
-
     public static void switchScene(ActionEvent event, String scenePath) throws IOException {
         FXMLLoader loader = new FXMLLoader(controller.class.getResource(scenePath));
         Parent root = loader.load();
@@ -63,15 +51,16 @@ public class controller {
     }
 
     @FXML
-    private void openFile(ActionEvent event, File file) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("displayFile.fxml"));
-        Parent newRoot = loader.load();
-
-        webViewController webViewController = loader.getController();
-        webViewController.loadFile(file.toURI().toString());
-
-        switchScene(event, "displayFile.fxml");
+    private void toggleMenu() {
+        TranslateTransition transition = new TranslateTransition(Duration.millis(300), menuPane);
+        if (isMenuVisible) {
+            transition.setToX(menuPane.getWidth());
+            System.out.println("Should be visible");
+        } else {
+            transition.setToX(0);
+        }
+        transition.play();
+        isMenuVisible = !isMenuVisible;
+        System.out.println("Menu clicked");
     }
-
-
 }
