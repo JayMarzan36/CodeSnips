@@ -6,8 +6,10 @@ as
 assert
 async
 await
-inputbreak
-classcontinue
+input
+break
+class
+continue
 def
 del
 elif

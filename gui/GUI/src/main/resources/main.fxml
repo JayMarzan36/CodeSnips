@@ -24,7 +24,7 @@
             <Blend />
          </effect>
       </Text>
-      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#toggleMenu" style="-fx-background-radius: 9; -fx-background-color: #3B82F6;" text="☰" textFill="WHITE" AnchorPane.bottomAnchor="361.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="539.0" AnchorPane.topAnchor="14.0" />
+      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#toggleMenu" style="-fx-background-radius: 9; -fx-background-color: #27272A;" text="☰" textFill="WHITE" AnchorPane.bottomAnchor="361.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="539.0" AnchorPane.topAnchor="14.0" />
       <Pane fx:id="menuPane" layoutX="-80.0" layoutY="39.0" prefHeight="200.0" prefWidth="80.0">
          <children>
             <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="Button" />
