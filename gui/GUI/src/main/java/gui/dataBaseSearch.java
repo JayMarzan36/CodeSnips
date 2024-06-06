@@ -17,7 +17,7 @@ public class dataBaseSearch {
     }
     public static List<String> readDataBase(String keyWord) {
         String line;
-        String filePath = "D:/Coding/CodeSnips/src/data/DataBase.txt";
+        File filePath = new File("src/main/java/gui/data/DataBase.txt");
         int lineCount = 1;
         List<String> foundData = new ArrayList<>();
         BufferedReader br =null;

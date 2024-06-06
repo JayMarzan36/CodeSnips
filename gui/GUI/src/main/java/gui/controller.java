@@ -29,11 +29,9 @@ public class controller {
     @FXML
     private void submitKeyWord(ActionEvent event) throws IOException {
         String input = keywordInput.getText();
-//        System.out.println("Input: " + input);
         if (!Utils.whatIsPath(input) && !input.isEmpty()) {
             System.out.println(input);
             List<String> retrievedData = dataBaseSearch.readDataBase(keywordInput.getText());
-
             if (retrievedData != null && !retrievedData.isEmpty()) {
                 dataBaseLines = retrievedData;
                 System.out.println(dataBaseLines);
@@ -45,7 +43,6 @@ public class controller {
             System.out.println("Blank Input");
             keywordInput.setStyle("-fx-background-color: red");
         }
-
     }
     @FXML
     private void changeInputColor() {
@@ -77,16 +74,8 @@ public class controller {
         System.out.println("Menu clicked");
     }
     @FXML
-    private void addButton() {
-        DirectoryChooser chooser = new DirectoryChooser();
-        chooser.setTitle("Select a Folder");
-        File selectedDirectory = chooser.showDialog(application.getPrimaryStage());
-
-        if (selectedDirectory != null) {
-            System.out.println(STR."Valid selection: \{selectedDirectory}");
-        } else {
-            System.out.println("Invalid selection");
-        }
+    private void addButton(ActionEvent event) throws IOException {
+        switchScene(event, "/addData.fxml");
     }
     @FXML
     private void helpButton() {
@@ -94,7 +83,7 @@ public class controller {
     }
     @FXML
     private void openSupportAlert() {
-        popUps("Support", "Supported languages: Python, Java, C.\n \nYou can expand language support by creating new key word files for the wanted language.\n \nNOTE: you will need to remake the database if you add new key words.");
+        popUps("Support", "Supported languages: Python, Java, C.\n \nYou can expand language support by creating new keyword files for the wanted language.\n \nNOTE: you will need to remake the database if you add new keywords.");
     }
     private void popUps(String title, String contents) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);

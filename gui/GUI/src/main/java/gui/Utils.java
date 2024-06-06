@@ -1,8 +1,10 @@
 package gui;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Stack;
 
 public class Utils {
     public static void main(String[] args) throws IOException {
@@ -11,8 +13,43 @@ public class Utils {
 
 
     }
-    public static void readFile(String filePath) {
+    public static List<String> findFiles(String folderPath, String[] includeExtensions) {
+        List<String> filePaths = new ArrayList<>();
+        Stack<File> stack = new Stack<>();
+        File root = new File(folderPath);
+        if (!root.isDirectory()) {
+            System.err.println("Error: The specified path is not a directory.");
+            return filePaths;
+        }
+        stack.push(root);
+        while (!stack.isEmpty()) {
+            File current = stack.pop();
+            File[] files = current.listFiles();
+            if (files != null) {
+                for (File file : files) {
+                    if (file.isFile() && isIncluded(file, includeExtensions)) {
+                        filePaths.add(file.getAbsolutePath());
+                    } else if (file.isDirectory()) {
+                        stack.push(file);
+                    }
+                }
+            }
+        }
+        return filePaths;
+    }
+    private static boolean isIncluded(File file, String[] includedExtensions) {
+        String fileName = file.getName();
+        for (String extensions: includedExtensions) {
+            if (fileName.toLowerCase().endsWith(extensions.toLowerCase())) {
+                return true;
+            }
+        }
+        return false;
+    }
+    public static String[] readFile(String filePath) {
         String line;
+        String[] extensions;
+        List<String> tempList = new ArrayList<>();
         BufferedReader br =null;
         try {
             FileInputStream fis = new FileInputStream(filePath);
@@ -22,7 +59,7 @@ public class Utils {
         }
         try {
             while ((line = br.readLine()) != null) {
-                System.out.println(line);
+                tempList.add(line);
             }
         } catch (IOException e) {
             System.out.println(e);
@@ -33,6 +70,8 @@ public class Utils {
                 System.out.println(e);
             }
         }
+        extensions = tempList.toArray(new String[0]);
+        return extensions;
     }
 
     public static File[] getFilesInDirectory(File directory, Map<String, String> filesFound) throws IOException {
@@ -68,8 +107,8 @@ public class Utils {
         }
         return false;
     }
-    public static void writeToFile(List<String> toWrite) {
-        try (FileWriter writer = new FileWriter("D:/Coding/CodeSnips/src/data/DataBase.txt", true)){
+    public static void writeToFile(List<String> toWrite, String saveFilePath) {
+        try (FileWriter writer = new FileWriter(saveFilePath, true)){
             String finalWrite = (toWrite + System.lineSeparator());
             for (String towrite: toWrite) {
                 writer.write(towrite + '|');
