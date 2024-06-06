@@ -10,9 +10,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -75,8 +77,24 @@ public class controller {
         System.out.println("Menu clicked");
     }
     @FXML
+    private void addButton() {
+        DirectoryChooser chooser = new DirectoryChooser();
+        chooser.setTitle("Select a Folder");
+        File selectedDirectory = chooser.showDialog(application.getPrimaryStage());
+
+        if (selectedDirectory != null) {
+            System.out.println(STR."Valid selection: \{selectedDirectory}");
+        } else {
+            System.out.println("Invalid selection");
+        }
+    }
+    @FXML
+    private void helpButton() {
+        popUps("Help", "To-Do: add a link to documentation.");
+    }
+    @FXML
     private void openSupportAlert() {
-        popUps("Support", "Supported languages: Python, Java, C.\nYou can add more by creating new keyword files for the wanted language");
+        popUps("Support", "Supported languages: Python, Java, C.\n \nYou can expand language support by creating new key word files for the wanted language.\n \nNOTE: you will need to remake the database if you add new key words.");
     }
     private void popUps(String title, String contents) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);

@@ -28,4 +28,8 @@ public class application extends Application{
         launch();
     }
 
+    public static Stage getPrimaryStage() {
+        return primaryStage;
+    }
+
 }
