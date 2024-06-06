@@ -10,11 +10,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
-import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -30,17 +28,14 @@ public class controller {
     private void submitKeyWord(ActionEvent event) throws IOException {
         String input = keywordInput.getText();
         if (!Utils.whatIsPath(input) && !input.isEmpty()) {
-            System.out.println(input);
             List<String> retrievedData = dataBaseSearch.readDataBase(keywordInput.getText());
             if (retrievedData != null && !retrievedData.isEmpty()) {
                 dataBaseLines = retrievedData;
-                System.out.println(dataBaseLines);
                 switchScene(event, "/showResults.fxml");
             } else {
                 keywordInput.setStyle("-fx-background-color: red");
             }
         } else {
-            System.out.println("Blank Input");
             keywordInput.setStyle("-fx-background-color: red");
         }
     }
@@ -65,13 +60,11 @@ public class controller {
         TranslateTransition transition = new TranslateTransition(Duration.millis(250), menuPane);
         if (isMenuVisible) {
             transition.setToX(menuPane.getWidth());
-            System.out.println("Should be visible");
         } else {
             transition.setToX(0);
         }
         transition.play();
         isMenuVisible = !isMenuVisible;
-        System.out.println("Menu clicked");
     }
     @FXML
     private void addButton(ActionEvent event) throws IOException {

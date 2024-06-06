@@ -11,12 +11,12 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-border-radius: 6; -fx-background-color: #27272A;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controller">
    <children>
-      <TextField fx:id="keywordInput" alignment="CENTER" layoutX="185.0" layoutY="210.0" onKeyPressed="#changeInputColor" promptText="..." style="-fx-background-radius: 9; -fx-background-color: white;" AnchorPane.bottomAnchor="165.0" AnchorPane.leftAnchor="185.0">
+      <TextField fx:id="keywordInput" alignment="CENTER" layoutX="185.0" layoutY="210.0" onKeyPressed="#changeInputColor" promptText="..." style="-fx-background-radius: 9; -fx-background-color: white;" AnchorPane.bottomAnchor="165.0" AnchorPane.leftAnchor="185.0" AnchorPane.rightAnchor="266.0" AnchorPane.topAnchor="210.0">
          <tooltip>
             <Tooltip text="Enter key word" />
          </tooltip></TextField>
-      <Button layoutX="363.0" layoutY="210.0" mnemonicParsing="false" onAction="#submitKeyWord" style="-fx-background-radius: 9; -fx-background-color: #22C55E;" text="Search" textFill="WHITE" AnchorPane.bottomAnchor="165.0" AnchorPane.rightAnchor="185.0" />
-      <Text fill="WHITE" layoutX="152.0" layoutY="151.0" strokeLineCap="ROUND" strokeLineJoin="BEVEL" strokeType="OUTSIDE" strokeWidth="3.2" style="-fx-font-size: 60;" text="Code Snips" textAlignment="CENTER" AnchorPane.bottomAnchor="234.1953125" AnchorPane.leftAnchor="152.0" AnchorPane.rightAnchor="151.45703125" AnchorPane.topAnchor="86.25390625">
+      <Button layoutX="363.0" layoutY="210.0" mnemonicParsing="false" onAction="#submitKeyWord" style="-fx-background-radius: 9; -fx-background-color: #22C55E;" text="Search" textFill="WHITE" AnchorPane.bottomAnchor="165.0" AnchorPane.leftAnchor="363.0" AnchorPane.rightAnchor="185.0" AnchorPane.topAnchor="210.0" />
+      <Text fill="WHITE" layoutX="152.0" layoutY="156.0" strokeLineCap="ROUND" strokeLineJoin="BEVEL" strokeType="OUTSIDE" strokeWidth="3.2" style="-fx-font-size: 60;" text="Code Snips" textAlignment="CENTER" AnchorPane.bottomAnchor="228.94140625" AnchorPane.leftAnchor="152.0" AnchorPane.rightAnchor="151.45703125" AnchorPane.topAnchor="91.25390625">
          <font>
             <Font size="36.0" />
          </font>
@@ -24,7 +24,7 @@
             <Blend />
          </effect>
       </Text>
-      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#toggleMenu" style="-fx-background-radius: 9; -fx-background-color: #27272A;" text="☰" textFill="WHITE" AnchorPane.bottomAnchor="361.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="539.0" AnchorPane.topAnchor="14.0" />
+      <Button layoutX="26.0" layoutY="14.0" mnemonicParsing="false" onAction="#toggleMenu" style="-fx-background-radius: 9; -fx-background-color: #27272A;" text="☰" textFill="WHITE" AnchorPane.bottomAnchor="361.0" />
       <Pane fx:id="menuPane" layoutX="-80.0" layoutY="39.0" prefHeight="200.0" prefWidth="80.0">
          <children>
             <Button id="addButton" layoutX="21.0" layoutY="14.0" mnemonicParsing="false" onAction="#addButton" style="-fx-background-radius: 9; -fx-background-color: #22C55E;" text="Add" textFill="WHITE">

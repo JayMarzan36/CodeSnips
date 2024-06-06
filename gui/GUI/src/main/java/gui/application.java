@@ -16,10 +16,12 @@ public class application extends Application{
 
         Scene scene = new Scene(root, 600, 400);
 
+
         this.primaryStage = primaryStage;
 
-        primaryStage.setTitle("CodeSnips");
+        primaryStage.setTitle("Code Snips");
 
+        primaryStage.setResizable(false);
         primaryStage.setScene(scene);
         primaryStage.show();
     }

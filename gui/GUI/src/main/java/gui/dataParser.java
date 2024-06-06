@@ -18,17 +18,14 @@ public class dataParser{
     }
 
     public static void doMainLogic (String inputPath, int lineFactor, ArrayList<String> current_contents, Map<String, String[]> returnedDict, String dataBaseFile) throws IOException {
-        System.out.println("Starting to parse files");
         String[] includeExtensions = Utils.readFile("src/main/java/gui/data/extensionsToInclude.txt");
         ArrayList<String> keyWords = parseFile("src/main/java/gui/data/keyWords.txt");
         List<String> filesFound = Utils.findFiles(inputPath, includeExtensions);
         for (String filepath: filesFound) {
-            System.out.println(STR."Parsing: \{filepath}");
             current_contents = parseFile(filepath);
             returnedDict = keywordsInCurrentLine(keyWords, current_contents, lineFactor);
             saveData(returnedDict, filepath, dataBaseFile);
         }
-        System.out.println("Done parsing files");
     }
 
     public static ArrayList<String> parseFile(String filePath) throws IOException {

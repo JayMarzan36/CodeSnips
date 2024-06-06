@@ -2,14 +2,12 @@ package gui;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Hyperlink;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Objects;
 import java.util.Scanner;
 
 public class viewSelectedFileController {
@@ -21,7 +19,6 @@ public class viewSelectedFileController {
     @FXML
     public void initialize() throws FileNotFoundException {
         String linkToShow = showResultController.getLink();
-        System.out.println(linkToShow);
         WebEngine webEngine = webView.getEngine();
         webEngine.loadContent(convertToHtml(linkToShow));
 

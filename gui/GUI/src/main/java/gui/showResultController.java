@@ -10,8 +10,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import gui.controller;
-
 public class showResultController {
     @FXML
     private ListView<Hyperlink> listView;
@@ -36,7 +34,6 @@ public class showResultController {
     }
 
     private void handleHyperLinkAction(ActionEvent event, Hyperlink hyperlink) throws IOException {
-        System.out.println("Clicked on: " + hyperlink.getText());
         selectedLink = hyperlink.getText();
         gui.controller.switchScene(event, "/viewFile.fxml");
     }
