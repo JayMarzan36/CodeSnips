@@ -9,7 +9,6 @@
    <children>
       <Button layoutX="200.0" layoutY="168.0" mnemonicParsing="false" onAction="#selectFolderButton" style="-fx-background-radius: 9; -fx-background-color: #22C55E;" text="Select Folder" textFill="WHITE" />
       <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#backToMain" style="-fx-background-radius: 9; -fx-background-color: #C42121;" text="Cancel / back" textFill="WHITE" />
-      <Button layoutX="359.0" layoutY="168.0" mnemonicParsing="false" onAction="#startMakingData" style="-fx-background-radius: 9; -fx-background-color: #08419E;" text="Start" textFill="WHITE" />
-      <ProgressBar layoutX="200.0" layoutY="207.0" prefWidth="200.0" progress="0.0" />
+      <Button layoutX="359.0" layoutY="168.0" mnemonicParsing="false" onAction="#startMakingData" style="-fx-background-radius: 9; -fx-background-color: #08419E;" text="Add" textFill="WHITE" />
    </children>
 </AnchorPane>

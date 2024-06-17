@@ -72,7 +72,7 @@ public class controller {
     }
     @FXML
     private void helpButton() {
-        popUps("Help", "To-Do: add a link to documentation.");
+        popUps("Help", "Documentation and help on GitHub page");
     }
     @FXML
     private void openSupportAlert() {
