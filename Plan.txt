@@ -1,8 +1,0 @@
-Plan
-
-Features I want
-1. Input key word to find code snips from a database made of code written and submitted by the user
-2. The ability to submit new code to database
-3. When searching database read and search all files for keyword and show the files and sections where said keyword appears
-4. Look modern
-5. Have smooth movements
