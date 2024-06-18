@@ -1,9 +1,8 @@
 # CodeSnips
 CodeSnips is a Java application that enables users to search a database of their programming files to find what files contain a keyword related to what the user inputs.
 
-<video width = "320" height = "240" controls>
-    <source src="https://www.youtube.com/watch?v=0NBn988YiAk" type="video/mp4">
-</video>
+Demo video
+[![Video](https://img.youtube.com/vi/0NBn988YiAk/0.jpg%29)](https://www.youtube.com/watch?v=0NBn988YiAk)
 
 ## Overview
 The main driving program for this app is **dataParser.java** and **dataBaseSearch.java**.
@@ -34,4 +33,4 @@ Modifying the following files affects such
   * This is a list of the file extensions to include are, modifying such would change what files show up in **DataBase.txt**. The user can modify this file to add file extensions that work with their needs.
 
 * **keyWords.txt**
-  * This is a list of the keywords used in the **dataParser.java**, which looks through a file for said keywords and reports on whether they are in the file. Users can modify this file to add keywords that are related to the users needs.
+  * This is a list of the keywords used in the **dataParser.java**, which looks through a file for said keywords and reports on whether they are in the file. Users can modify this file to add keywords that are related to the user's needs.
