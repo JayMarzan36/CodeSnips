@@ -5,7 +5,7 @@ module GUI {
     requires javafx.graphics;
 
 
-    opens gui to javafx.fxml;
+    opens com to javafx.fxml;
 
-    exports gui;
+    exports com;
 }

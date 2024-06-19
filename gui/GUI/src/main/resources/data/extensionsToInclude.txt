@@ -1,3 +1,0 @@
-.java
-.py
-.cpp

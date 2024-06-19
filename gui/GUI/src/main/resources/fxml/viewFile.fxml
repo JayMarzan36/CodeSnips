@@ -5,7 +5,7 @@
 <?import javafx.scene.web.WebView?>
 
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #27272A;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.viewSelectedFileController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #27272A;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.viewSelectedFileController">
    <children>
       <Button alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#backToResult" prefHeight="25.0" prefWidth="41.0" style="-fx-background-radius: 9; -fx-background-color: #22C55E;" text="back" textAlignment="CENTER" textFill="WHITE" />
       <WebView fx:id="webView" layoutX="100.0" layoutY="50.0" prefHeight="300.0" prefWidth="400.0" />

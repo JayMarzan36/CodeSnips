@@ -9,7 +9,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-border-radius: 6; -fx-background-color: #27272A;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-border-radius: 6; -fx-background-color: #27272A;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controller">
    <children>
       <TextField fx:id="keywordInput" alignment="CENTER" layoutX="185.0" layoutY="210.0" onKeyPressed="#changeInputColor" promptText="..." style="-fx-background-radius: 9; -fx-background-color: white;" AnchorPane.bottomAnchor="165.0" AnchorPane.leftAnchor="185.0" AnchorPane.rightAnchor="266.0" AnchorPane.topAnchor="210.0">
          <tooltip>
