@@ -17,7 +17,7 @@ public class dataBaseSearch {
     }
     public static List<String> readDataBase(String keyWord) {
         String line;
-        File filePath = new File("src/main/java/gui/data/DataBase.txt");
+        File filePath = new File("src/main/resources/data/DataBase.txt");
         int lineCount = 1;
         List<String> foundData = new ArrayList<>();
         BufferedReader br =null;
@@ -45,8 +45,8 @@ public class dataBaseSearch {
         } finally {
             try {
                 br.close();
-            } catch (IOException e) {
-                System.out.println(e);
+            } catch (NullPointerException | IOException e) {
+                System.out.println("Create database.txt file");
             }
         }
         return foundData;

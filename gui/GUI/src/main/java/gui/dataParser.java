@@ -1,10 +1,6 @@
 package gui;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -18,32 +14,20 @@ public class dataParser{
     }
 
     public static void doMainLogic (String inputPath, int lineFactor, ArrayList<String> current_contents, Map<String, String[]> returnedDict, String dataBaseFile) throws IOException {
-        String[] includeExtensions = Utils.readFile("src/main/java/gui/data/extensionsToInclude.txt");
-        ArrayList<String> keyWords = parseFile("src/main/java/gui/data/keyWords.txt");
+        String[] includeExtensions = Utils.readFile("/data/extensionsToInclude.txt");
+
+        ArrayList<String> keyWords = Utils.parseFile("/data/keyWords.txt");
+
+
         List<String> filesFound = Utils.findFiles(inputPath, includeExtensions);
         for (String filepath: filesFound) {
-            current_contents = parseFile(filepath);
+            current_contents = Utils.parseFile(filepath);
             returnedDict = keywordsInCurrentLine(keyWords, current_contents, lineFactor);
             saveData(returnedDict, filepath, dataBaseFile);
         }
     }
 
-    public static ArrayList<String> parseFile(String filePath) throws IOException {
-        BufferedReader br;
 
-        br = new BufferedReader(new InputStreamReader(new FileInputStream(filePath)));
-        ArrayList<String> contents = new ArrayList<>();
-        try {
-            String line;
-            while ((line = br.readLine()) != null) {
-                contents.add(line);
-            }
-        } catch (FileNotFoundException e) {
-            System.err.println("File not found: " + filePath);
-            throw e;
-        }
-        return contents;
-    }
 
     public static Map<String, String[]> keywordsInCurrentLine(ArrayList<String> keyWords, ArrayList<String> contents, int lineFactor) {
         String currentKey;

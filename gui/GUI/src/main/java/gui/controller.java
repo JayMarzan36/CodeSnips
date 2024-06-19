@@ -17,13 +17,22 @@ import java.io.IOException;
 import java.util.List;
 
 
-public class controller {
+public class controller implements applicationAware{
+    private application app;
+
     @FXML
     private TextField keywordInput;
     @FXML
     private Pane menuPane;
     private boolean isMenuVisible = true;
     private static List<String> dataBaseLines;
+
+
+    @Override
+    public void setApplication(application app) {
+        this.app = app;
+    }
+
     @FXML
     private void submitKeyWord(ActionEvent event) throws IOException {
         String input = keywordInput.getText();
@@ -31,7 +40,7 @@ public class controller {
             List<String> retrievedData = dataBaseSearch.readDataBase(keywordInput.getText());
             if (retrievedData != null && !retrievedData.isEmpty()) {
                 dataBaseLines = retrievedData;
-                switchScene(event, "/showResults.fxml");
+                app.switchScene("/fxml/showResults.fxml");
             } else {
                 keywordInput.setStyle("-fx-background-color: red");
             }
@@ -48,13 +57,7 @@ public class controller {
         List<String> dataBaseLines1 = dataBaseLines;
         return dataBaseLines1;
     }
-    public static void switchScene(ActionEvent event, String scenePath) throws IOException {
-        FXMLLoader loader = new FXMLLoader(controller.class.getResource(scenePath));
-        Parent root = loader.load();
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(root));
-        stage.show();
-    }
+
     @FXML
     private void toggleMenu() {
         TranslateTransition transition = new TranslateTransition(Duration.millis(250), menuPane);
@@ -67,8 +70,8 @@ public class controller {
         isMenuVisible = !isMenuVisible;
     }
     @FXML
-    private void addButton(ActionEvent event) throws IOException {
-        switchScene(event, "/addData.fxml");
+    private void addButton() throws IOException {
+        app.switchScene("/fxml/addData.fxml");
     }
     @FXML
     private void helpButton() {

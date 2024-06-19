@@ -10,11 +10,17 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
 
-public class viewSelectedFileController {
+public class viewSelectedFileController implements applicationAware{
+    private application app;
 
     @FXML
     private WebView webView;
 
+
+    @Override
+    public void setApplication(application app) {
+        this.app = app;
+    }
 
     @FXML
     public void initialize() throws FileNotFoundException {
@@ -38,6 +44,6 @@ public class viewSelectedFileController {
 
     @FXML
     private void backToResult(ActionEvent event) throws IOException {
-        gui.controller.switchScene(event, "/showResults.fxml");
+        app.switchScene("/fxml/showResults.fxml");
     }
 }

@@ -10,11 +10,18 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class showResultController {
+public class showResultController implements applicationAware{
+    private application app;
     @FXML
     private ListView<Hyperlink> listView;
 
     private static String selectedLink;
+
+    @Override
+    public void setApplication(application app) {
+        this.app = app;
+    }
+
     @FXML
     private void initialize () throws InterruptedException {
         List<String> listOfPaths = gui.controller.getDataBaseLines();
@@ -31,11 +38,11 @@ public class showResultController {
             hyperList.add(filehyperlink);
         }
         listView.setItems(FXCollections.observableArrayList(hyperList));
-    }
+}
 
     private void handleHyperLinkAction(ActionEvent event, Hyperlink hyperlink) throws IOException {
         selectedLink = hyperlink.getText();
-        gui.controller.switchScene(event, "/viewFile.fxml");
+        app.switchScene("/fxml/viewFile.fxml");
     }
 
     public static String getLink() {
@@ -45,6 +52,6 @@ public class showResultController {
 
     @FXML
     private void backToSearch(ActionEvent event) throws IOException {
-        gui.controller.switchScene(event, "/main.fxml");
+        app.switchScene("/fxml/main.fxml");
     }
 }

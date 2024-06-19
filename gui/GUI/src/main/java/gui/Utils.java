@@ -1,6 +1,7 @@
 package gui;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -51,23 +52,26 @@ public class Utils {
         String[] extensions;
         List<String> tempList = new ArrayList<>();
         BufferedReader br =null;
-        try {
-            FileInputStream fis = new FileInputStream(filePath);
-            br = new BufferedReader(new InputStreamReader(fis));
-        } catch (FileNotFoundException e) {
-            System.out.printf("Exception %s", e);
-        }
-        try {
+
+        try (InputStream is = Utils.class.getResourceAsStream(filePath)) {
+            if (is == null) {
+                return new String[0];
+            }
+
+            br = new BufferedReader(new InputStreamReader(is));
+
             while ((line = br.readLine()) != null) {
                 tempList.add(line);
             }
         } catch (IOException e) {
             System.out.println(e);
         } finally {
-            try {
-                br.close();
-            } catch (IOException e) {
-                System.out.println(e);
+            if (br != null) {
+                try {
+                    br.close();
+                } catch (IOException e) {
+                    System.out.println(e);
+                }
             }
         }
         extensions = tempList.toArray(new String[0]);
@@ -116,5 +120,36 @@ public class Utils {
             writer.write(System.lineSeparator());
         } catch (IOException e) {
         }
+    }
+    public static ArrayList<String> parseFile(String filePath) throws IOException {
+        ArrayList<String> contents = new ArrayList<>();
+
+        // Check if filePath is a resource path or a full file path
+        if (filePath.startsWith("/")) {
+            // Resource path (using getResourceAsStream)
+            try (InputStream is = Utils.class.getResourceAsStream(filePath)) {
+                if (is == null) {
+                    throw new FileNotFoundException("Resource file not found: " + filePath);
+                }
+                try (BufferedReader br = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))) {
+                    String line;
+                    while ((line = br.readLine()) != null) {
+                        contents.add(line);
+                    }
+                }
+            }
+        } else {
+            // Full file path (using FileInputStream)
+            try (FileInputStream fis = new FileInputStream(filePath);
+                 InputStreamReader isr = new InputStreamReader(fis, StandardCharsets.UTF_8);
+                 BufferedReader br = new BufferedReader(isr)) {
+
+                String line;
+                while ((line = br.readLine()) != null) {
+                    contents.add(line);
+                }
+            }
+        }
+        return contents;
     }
 }

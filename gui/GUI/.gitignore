@@ -27,4 +27,4 @@ bin/
 
 ### Mac OS ###
 .DS_Store
-/src/main/java/gui/data/DataBase.txt
+/src/main/resources/data/DataBase.txt

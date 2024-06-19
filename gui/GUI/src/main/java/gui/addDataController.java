@@ -1,17 +1,23 @@
 package gui;
 
-import gui.application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.stage.DirectoryChooser;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Map;
 
-public class addDataController {
+public class addDataController implements applicationAware{
+    private application app;
     private static File selectedDirectory;
+
+    @Override
+    public void setApplication(application app) {
+        this.app = app;
+    }
 
     @FXML
     private void selectFolderButton() {
@@ -28,7 +34,7 @@ public class addDataController {
 
     @FXML
     private void backToMain(ActionEvent event) throws IOException {
-        gui.controller.switchScene(event, "/main.fxml");
+        app.switchScene("/fxml/main.fxml");
     }
 
     @FXML
@@ -36,7 +42,7 @@ public class addDataController {
         String selectedFolderPath = String.valueOf(selectedDirectory);
         ArrayList<String> currentContents = null;
         Map<String, String[]> returnedDict = null;
-        String dataBaseFile = "src/main/java/gui/data/DataBase.txt";
+        String dataBaseFile = "/data/DataBase.txt";
 
 
         dataParser.doMainLogic(selectedFolderPath, 2, currentContents, returnedDict, dataBaseFile);
