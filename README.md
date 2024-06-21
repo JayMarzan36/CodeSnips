@@ -15,9 +15,8 @@ In the GUI version, the **dataBaseSearch.java** return is shown as a list of fil
 In the text/command line version, the **dataBaseSearch.java** return is shown as a list of file paths.
 
 ### Versions
-In this repository, there are two versions of this application.
+In this repository, there is only one version which is the gui.
 * Gui
-* Text-based
 
 The GUI is an app, and the text-based is more command-line driven.
 
