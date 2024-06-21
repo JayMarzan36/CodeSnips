@@ -43,7 +43,7 @@ public class addDataController implements applicationAware{
         String selectedFolderPath = String.valueOf(selectedDirectory);
         ArrayList<String> currentContents = null;
         Map<String, String[]> returnedDict = null;
-        String dataBaseFile = "/src/data/DataBase.txt";
+        String dataBaseFile = "/DataBase.txt";
 
 
         dataParser.doMainLogic(selectedFolderPath, 2, currentContents, returnedDict, dataBaseFile);

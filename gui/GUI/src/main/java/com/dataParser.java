@@ -14,16 +14,15 @@ public class dataParser{
 
     public static void doMainLogic (String inputPath, int lineFactor, ArrayList<String> current_contents, Map<String, String[]> returnedDict, String dataBaseFile) throws IOException {
         String[] includeExtensions = Utils.readFile("/extensionsToInclude.txt");
-
         ArrayList<String> keyWords = Utils.parseFile("/keyWords.txt");
-
-
         List<String> filesFound = Utils.findFiles(inputPath, includeExtensions);
         for (String filepath: filesFound) {
+            System.out.println(filepath);
             current_contents = Utils.parseFile(filepath);
             returnedDict = keywordsInCurrentLine(keyWords, current_contents, lineFactor);
             saveData(returnedDict, filepath, dataBaseFile);
         }
+        System.out.println("Done parsing new folder");
     }
 
 
@@ -57,17 +56,33 @@ public class dataParser{
     }
 
     public static void saveData(Map<String, String[]> returnedDict, String filePath, String dataBaseFile) {
-        String fileName;
-        String[] splitPath;
         List<String> contentToSave = new ArrayList<>();
-        if (filePath.contains("/")) splitPath = filePath.split("/");
-        else splitPath = filePath.split("\\\\");
-        fileName = splitPath[splitPath.length - 1];
-        contentToSave.add(fileName);
-        contentToSave.add(filePath);
-        for (String key: returnedDict.keySet()) {
-            contentToSave.add(key + Arrays.toString(returnedDict.get(key)));
+
+        // Extracting file name from filePath
+        String fileName;
+        if (filePath.contains("/")) {
+            fileName = filePath.substring(filePath.lastIndexOf("/") + 1);
+        } else {
+            fileName = filePath.substring(filePath.lastIndexOf("\\") + 1);
         }
+
+        // Constructing the content line
+        StringBuilder contentLine = new StringBuilder();
+        contentLine.append(fileName).append("|");
+        contentLine.append(filePath).append("|");
+
+        // Adding key-value pairs from returnedDict
+        List<String> dictEntries = new ArrayList<>();
+        for (String key : returnedDict.keySet()) {
+            String value = key + "[" + Arrays.toString(returnedDict.get(key)) + "]";
+            dictEntries.add(value);
+        }
+        contentLine.append(String.join("|", dictEntries));
+
+        // Adding the constructed line to contentToSave
+        contentToSave.add(contentLine.toString());
+
+        // Writing contentToSave to dataBaseFile
         Utils.writeToFile(contentToSave, dataBaseFile);
     }
 }
