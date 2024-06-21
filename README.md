@@ -33,3 +33,14 @@ Modifying the following files affects such
 
 * **keyWords.txt**
   * This is a list of the keywords used in the **dataParser.java**, which looks through a file for said keywords and reports on whether they are in the file. Users can modify this file to add keywords that are related to the user's needs.
+
+
+### Future
+For now, I'm satisfied with how the project turned out, but if I ever get back to it there are some things that I would want to improve on.
+
+#### Changes
+* How the program parses file
+  *  find a way to tokenize and isolate keywords from comments for example when searching for keywords
+
+*  When viewing files in the app
+   *   When viewing files in the app change it to show an actual snippet of the file. 
